@@ -1,5 +1,5 @@
 {
     "PORT": "4001",
-    "MONGO_URI": "mongodb://mongodb:27017/e-com",
+    "MONGO_URI": "mongodb://mongodb-service:27017/e-com",
     "JWT_SECRET": "javascriptisnotfun"
 }
