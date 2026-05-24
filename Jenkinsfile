@@ -87,7 +87,7 @@ pipeline {
 
             git diff --cached --quiet || git commit -m "Updated all image tags to $IMAGE_TAG"
 
-            git push origin main
+            git push origin master
             '''
         }
     }
