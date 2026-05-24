@@ -1,0 +1,8 @@
+{
+    "PORT": "4000",
+    "USER_ROUTES": "http://localhost:4001",
+    "PRODUCT_ROUTES": "http://localhost:4001",
+    "ORDER_ROUTES": "http://localhost:4001",
+    "PAYMENET_ROUTES": "http://localhost:4001",
+    "NOTIFICATION_ROUTES": "http://localhost:4001"
+}

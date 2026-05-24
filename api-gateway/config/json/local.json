@@ -1,0 +1,10 @@
+{
+    "PORT": "4000",
+    "services": {
+        "USER_ROUTES": "http://e-com-microservice-user-service-1:4001",
+        "PRODUCT_ROUTES": "http://e-com-microservice-product-service-1:4002",
+        "ORDER_ROUTES": "http://e-com-microservice-order-service-1:4003",
+        "PAYMENET_ROUTES": "http://e-com-microservice-payment-service-1:4004",
+        "NOTIFICATION_ROUTES": "http://e-com-microservice-notification-service-1:4005"
+    }
+}

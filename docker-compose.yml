@@ -1,0 +1,88 @@
+version: "3.9"
+
+services:
+  apigateway:
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: local
+    depends_on:
+      - user-service
+      - order-service
+      - payment-service
+      - product-service
+      - notification-service
+    networks:
+      - microservice-network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    environment:
+      NODE_ENV: local
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "4002:4002"
+    environment:
+      NODE_ENV: local
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "4003:4003"
+    environment:
+      NODE_ENV: local
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "4004:4004"
+    environment:
+      NODE_ENV: local
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "4005:4005"
+    environment:
+      NODE_ENV: local
+    networks:
+      - microservice-network
+
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - microservice-network
+
+volumes:
+  mongo-data:
+
+networks:
+  microservice-network:
+    driver: bridge
