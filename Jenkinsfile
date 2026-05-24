@@ -51,46 +51,46 @@ pipeline {
         }
 
         stage('Update Manifest Repo') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'github-creds',
-            usernameVariable: 'GIT_USER',
-            passwordVariable: 'GIT_PASS'
-        )]) {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-creds',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_PASS'
+                )]) {
+                
+                    sh '''
+                    rm -rf k8s-manifests
 
-            sh '''
-            rm -rf k8s-manifests
+                    git clone https://$GIT_USER:$GIT_PASS@github.com/snjeev-kushwaha/k8s-manifests.git
 
-            git clone https://$GIT_USER:$GIT_PASS@github.com/snjeev-kushwaha/k8s-manifests.git
+                    cd k8s-manifests
 
-            cd k8s-manifests
+                    # Update all deployment image tags
 
-            # Update all deployment image tags
+                    sed -i "s|image: .*user-service.*|image: subhamku/user-service:$IMAGE_TAG|" user-service/deployment.yaml
 
-            sed -i "s|image: .*user-service.*|image: subhamku/user-service:$IMAGE_TAG|" user-service/deployment.yaml
+                    sed -i "s|image: .*order-service.*|image: subhamku/order-service:$IMAGE_TAG|" order-service/deployment.yaml
 
-            sed -i "s|image: .*order-service.*|image: subhamku/order-service:$IMAGE_TAG|" order-service/deployment.yaml
+                    sed -i "s|image: .*payment-service.*|image: subhamku/payment-service:$IMAGE_TAG|" payment-service/deployment.yaml
 
-            sed -i "s|image: .*payment-service.*|image: subhamku/payment-service:$IMAGE_TAG|" payment-service/deployment.yaml
+                    sed -i "s|image: .*product-service.*|image: subhamku/product-service:$IMAGE_TAG|" product-service/deployment.yaml
 
-            sed -i "s|image: .*product-service.*|image: subhamku/product-service:$IMAGE_TAG|" product-service/deployment.yaml
+                    sed -i "s|image: .*notification-service.*|image: subhamku/notification-service:$IMAGE_TAG|" notification-service/deployment.yaml
 
-            sed -i "s|image: .*notification-service.*|image: subhamku/notification-service:$IMAGE_TAG|" notification-service/deployment.yaml
-
-            sed -i "s|image: .*api-gateway.*|image: subhamku/api-gateway:$IMAGE_TAG|" api-gateway/deployment.yaml
+                    sed -i "s|image: .*api-gateway.*|image: subhamku/api-gateway:$IMAGE_TAG|" api-gateway/deployment.yaml
 
 
-            git config user.email "sanjeevkushwaha876@gmail.com"
-            git config user.name "sanjeev kushwha"
+                    git config user.email "sanjeevkushwaha876@gmail.com"
+                    git config user.name "sanjeev kushwha"
 
-            git add .
+                    git add .
 
-            git diff --cached --quiet || git commit -m "Updated all image tags to $IMAGE_TAG"
+                    git diff --cached --quiet || git commit -m "Updated all image tags to $IMAGE_TAG"
 
-            git push origin master
-            '''
+                    git push origin master
+                    '''
+                }
+            }
         }
-    }
-}
     }
 }
