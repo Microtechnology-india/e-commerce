@@ -81,7 +81,7 @@ pipeline {
 
 
                     git config user.email "sanjeevkushwaha876@gmail.com"
-                    git config user.name "sanjeev kushwha"
+                    git config user.name "sanjeev kushwaha"
 
                     git add .
 
